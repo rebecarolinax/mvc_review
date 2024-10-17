@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Principal";
+}
+
+@if(ViewBag.NomeProfessor == null) 
+{
+    <a asp-controller="Login">Login</a>
+} else
+{
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%;">
+        <h1 style="margin-top: 30px" class="fs-4">Sua lista de turmas</h1>
+
+        <button class="btn btn-outline-primary fw-medium" type="button" data-bs-target="#cadastrarTurma" data-bs-toggle="modal">
+            Cadastrar turma
+        </button>
+    </div>
+   
+ 
+
+    <table class="table table-striped">
+        @* Cabeça da tabela *@
+        <thead>
+            <tr>
+                <th scope="col">Número</th>
+                <th scope="col">Nome da turma</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var turma in Model)
+            {
+                <tr>
+                    <td>@turma.TurmaId</td>
+                    <td>@turma.Nome</td>
+                    <td style="display:flex">
+                        <div style="display:flex">
+                            <form asp-controller="Professor" asp-action="ExcluirTurma" onsubmit="return confirm('Você tem certea que deseja excluir essa turma?')">
+                                <input type="hidden" name="turmaId" value="@turma.TurmaId" />
+                                <button type="submit" class="btn btn-danger" style="margin-right:10px">Excluir</button>
+                            </form>
+                        </div>
+                        <div style="display:flex">
+                            <form asp-controller="Atividade" asp-action="Index" asp-route-turmaId="@turma.TurmaId">
+                                <input type="hidden" name="turmaId" value="@turma.TurmaId" />
+                                <button type="submit" class="btn btn-success">Visualizar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (TempData["Mensagem"] != null)
+    {
+        <p class="text-danger mt-3">@TempData["Mensagem"]</p>
+    }
+
+    <div class="modal" tabindex="-1" id="cadastrarTurma">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Cadastrar turma</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form asp-controller="Professor" asp-action="CadastrarTurma">
+                <div class="modal-body">
+                        <label class="form-label">Nome da turma</label>
+                        <input type="text" required name="nomeTurma" placeholder="Nome" class="form-control"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<main class="form-signin ">
+    <h2 class="mb-4 fw-bold text-center">Bem-Vindo(a)</h2>
+
+    <form asp-controller="Login" asp-action="Logar" method="post">
+
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com" required />
+            <label for="emailInput">Email</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="passwordInput" name="senha" placeholder="Senha" required />
+            <label for="passwordInput">Senha</label>
+        </div>
+
+        <button style="width:80%; margin-left:70px"  class="btn btn-lg btn-primary btn-hover" type="submit">Entrar</button>
+
+        @if (TempData["Mensagem"] != null)
+        {
+            <p class="text-danger mt-5 text-center">@TempData["Mensagem"]</p>
+        }
+    </form>
+
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2024</p>
+</main>
+
+<style>
+    .btn-hover:hover {
+        background-color: #0056b3; 
+        color: white; 
+        transform: scale(1.1);
+        transition: 0.5s;
+    }
+</style>

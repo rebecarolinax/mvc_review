@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Atividades";
+}
+
+
+
+
+<div style="display:flex">
+    <p style="font-size:26px">Turma:</p><h1>@ViewBag.NomeTurma</h1>
+</div>
+
+<form asp-controller="Atividade" asp-action="CadastrarAtividade">
+    <label>Descricao da atividade</label>
+    <input type="hidden" name="turmaId" value="@ViewBag.TurmaId" />
+    <input type="text" required name="descricao" placeholder="Descrição" />
+    <button type="submit">Cadastrar atividade</button>
+</form>
+
+
+<table class="table table-striped">
+    @* Cabeça da tabela *@
+    <thead>
+        <tr>
+            <th scope="col">Número</th>
+            <th scope="col">Atividade</th>
+        </tr> 
+    </thead>
+
+
+    <tbody>
+        @foreach (var atividade in Model)
+        {
+            <tr>
+                <td>@atividade.AtividadeId</td>
+                <td>@atividade.Descricao</td>
+            </tr>
+        }
+    </tbody>
+</table>
